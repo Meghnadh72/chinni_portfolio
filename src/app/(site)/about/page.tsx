@@ -4,13 +4,27 @@ import { motion } from "framer-motion";
 import { Award } from "lucide-react";
 import ImageReveal from "@/components/ui/ImageReveal";
 import AnimatedText from "@/components/ui/AnimatedText";
-import { photographer } from "@/lib/demo-data";
+import { photographer as demoPhotographer } from "@/lib/demo-data";
+import { useSanityQuery } from "@/hooks/useSanity";
+import { photographerQuery } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function AboutPage() {
+  const { data: rawData } = useSanityQuery(photographerQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data = rawData as Record<string, any> | null;
+
+  const name = data?.name || demoPhotographer.name;
+  const fullBio = data?.shortBio || demoPhotographer.fullBio;
+  const philosophy = data?.philosophy || demoPhotographer.philosophy;
+  const achievements = data?.achievements?.length ? data.achievements : demoPhotographer.achievements;
+  const portraitUrl = data?.portrait
+    ? urlFor(data.portrait).width(700).height(900).url()
+    : "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=700&h=900&fit=crop";
+
   return (
     <div className="pt-24 md:pt-32">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center mb-16 md:mb-24">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -21,22 +35,21 @@ export default function AboutPage() {
             The Artist
           </motion.p>
           <AnimatedText
-            text={`About ${photographer.name}`}
+            text={`About ${name}`}
             as="h1"
             className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground"
           />
         </div>
 
-        {/* Portrait + Bio */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start mb-20 md:mb-32">
           <ImageReveal
-            src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=700&h=900&fit=crop"
-            alt={photographer.name}
+            src={portraitUrl}
+            alt={name}
             className="aspect-[3/4] rounded-sm sticky top-24"
           />
 
           <div>
-            {photographer.fullBio.split("\n\n").map((paragraph, i) => (
+            {fullBio.split("\n\n").map((paragraph: string, i: number) => (
               <motion.p
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -49,7 +62,6 @@ export default function AboutPage() {
               </motion.p>
             ))}
 
-            {/* Philosophy quote */}
             <motion.blockquote
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -58,13 +70,12 @@ export default function AboutPage() {
               className="border-l-2 border-accent pl-6 my-10"
             >
               <p className="text-foreground/80 italic font-serif text-xl md:text-2xl leading-relaxed">
-                &ldquo;{photographer.philosophy}&rdquo;
+                &ldquo;{philosophy}&rdquo;
               </p>
             </motion.blockquote>
           </div>
         </div>
 
-        {/* Achievements */}
         <div className="mb-20 md:mb-32">
           <div className="text-center mb-12">
             <AnimatedText
@@ -75,7 +86,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {photographer.achievements.map((achievement, i) => (
+            {achievements.map((achievement: string, i: number) => (
               <motion.div
                 key={achievement}
                 initial={{ opacity: 0, y: 30 }}

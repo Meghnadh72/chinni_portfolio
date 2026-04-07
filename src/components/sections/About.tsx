@@ -5,24 +5,36 @@ import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import ImageReveal from "@/components/ui/ImageReveal";
 import AnimatedText from "@/components/ui/AnimatedText";
-import { photographer } from "@/lib/demo-data";
+import { photographer as demoPhotographer } from "@/lib/demo-data";
+import { useSanityQuery } from "@/hooks/useSanity";
+import { photographerQuery } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function About() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-20% 0px" });
 
+  const { data: rawData } = useSanityQuery(photographerQuery);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data = rawData as Record<string, any> | null;
+
+  const name = data?.name || demoPhotographer.name;
+  const shortBio = data?.shortBio || demoPhotographer.shortBio;
+  const philosophy = data?.philosophy || demoPhotographer.philosophy;
+  const portraitUrl = data?.portrait
+    ? urlFor(data.portrait).width(700).height(900).url()
+    : "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=700&h=900&fit=crop";
+
   return (
     <section className="section-padding bg-background" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* Image */}
           <ImageReveal
-            src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=700&h=900&fit=crop"
-            alt={photographer.name}
+            src={portraitUrl}
+            alt={name}
             className="aspect-[3/4] rounded-sm"
           />
 
-          {/* Text */}
           <div>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -34,7 +46,7 @@ export default function About() {
             </motion.p>
 
             <AnimatedText
-              text={`Meet ${photographer.name}`}
+              text={`Meet ${name}`}
               as="h2"
               className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-6"
               delay={0.3}
@@ -46,7 +58,7 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="text-foreground/70 text-base md:text-lg leading-relaxed mb-8"
             >
-              {photographer.shortBio}
+              {shortBio}
             </motion.p>
 
             <motion.blockquote
@@ -56,7 +68,7 @@ export default function About() {
               className="border-l-2 border-accent pl-6 mb-8"
             >
               <p className="text-foreground/60 italic font-serif text-lg">
-                &ldquo;{photographer.philosophy}&rdquo;
+                &ldquo;{philosophy}&rdquo;
               </p>
             </motion.blockquote>
 

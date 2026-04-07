@@ -5,13 +5,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import AnimatedText from "@/components/ui/AnimatedText";
-import { services } from "@/lib/demo-data";
+import { services as demoServices } from "@/lib/demo-data";
+import { useSanityQuery } from "@/hooks/useSanity";
+import { servicesQuery } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function ServicesPage() {
+  const { data: sanityServices } = useSanityQuery(servicesQuery);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const services = sanityServices?.length
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ? sanityServices.map((s: any) => ({
+        title: s.title,
+        slug: s.slug || s.title?.toLowerCase().replace(/\s+/g, "-"),
+        shortDescription: s.shortDescription || "",
+        coverImage: s.coverImage
+          ? urlFor(s.coverImage).width(800).height(600).url()
+          : "",
+        priceRange: s.priceRange || "",
+        features: s.features || [],
+      }))
+    : demoServices;
+
   return (
     <div className="pt-24 md:pt-32">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center mb-16 md:mb-24">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -37,9 +56,8 @@ export default function ServicesPage() {
           </motion.p>
         </div>
 
-        {/* Services */}
         <div className="space-y-20 md:space-y-32 pb-20">
-          {services.map((service, i) => (
+          {services.map((service: { slug: string; title: string; coverImage: string; priceRange: string; shortDescription: string; features: string[] }, i: number) => (
             <motion.div
               key={service.slug}
               id={service.slug}
@@ -51,7 +69,6 @@ export default function ServicesPage() {
                 i % 2 === 1 ? "lg:direction-rtl" : ""
               }`}
             >
-              {/* Image */}
               <div className={`relative aspect-[4/3] overflow-hidden rounded-sm ${i % 2 === 1 ? "lg:order-2" : ""}`}>
                 <Image
                   src={service.coverImage}
@@ -62,7 +79,6 @@ export default function ServicesPage() {
                 />
               </div>
 
-              {/* Content */}
               <div className={i % 2 === 1 ? "lg:order-1" : ""}>
                 <span className="text-accent text-xs uppercase tracking-[0.2em]">
                   {service.priceRange}
@@ -74,14 +90,16 @@ export default function ServicesPage() {
                   {service.shortDescription}
                 </p>
 
-                <ul className="space-y-3 mb-8">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3 text-foreground/70 text-sm">
-                      <Check size={16} className="text-accent mt-0.5 shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                {service.features?.length > 0 && (
+                  <ul className="space-y-3 mb-8">
+                    {service.features.map((feature: string) => (
+                      <li key={feature} className="flex items-start gap-3 text-foreground/70 text-sm">
+                        <Check size={16} className="text-accent mt-0.5 shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 <Link
                   href="/contact"

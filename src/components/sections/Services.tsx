@@ -5,11 +5,30 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import AnimatedText from "@/components/ui/AnimatedText";
-import { services } from "@/lib/demo-data";
+import { services as demoServices } from "@/lib/demo-data";
+import { useSanityQuery } from "@/hooks/useSanity";
+import { servicesQuery } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function Services() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+
+  const { data: sanityServices } = useSanityQuery(servicesQuery);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const services = sanityServices?.length
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ? sanityServices.map((s: any) => ({
+        title: s.title,
+        slug: s.slug || s.title?.toLowerCase().replace(/\s+/g, "-"),
+        shortDescription: s.shortDescription || "",
+        coverImage: s.coverImage
+          ? urlFor(s.coverImage).width(800).height(600).url()
+          : "",
+        priceRange: s.priceRange || "",
+      }))
+    : demoServices;
 
   return (
     <section className="section-padding bg-background" ref={ref}>
@@ -31,7 +50,7 @@ export default function Services() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          {services.map((service, i) => (
+          {services.map((service: { slug: string; title: string; coverImage: string; priceRange: string; shortDescription: string }, i: number) => (
             <motion.div
               key={service.slug}
               initial={{ opacity: 0, y: 40 }}
