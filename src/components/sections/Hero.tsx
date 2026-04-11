@@ -2,29 +2,34 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import AnimatedText from "@/components/ui/AnimatedText";
-import { siteSettings } from "@/lib/demo-data";
+import EditableField from "@/components/admin/EditableField";
+import EditableImage from "@/components/admin/EditableImage";
+import type { SiteSettings } from "@/lib/types";
 
-export default function Hero() {
+export default function Hero({ settings }: { settings: SiteSettings }) {
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Image with Ken Burns effect */}
-      <motion.div
-        className="absolute inset-0"
-        initial={{ scale: 1 }}
-        animate={{ scale: 1.08 }}
-        transition={{ duration: 20, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
-      >
-        <Image
-          src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1920&h=1080&fit=crop"
-          alt="Photography hero"
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
-      </motion.div>
+      <EditableImage table="cp_site_settings" rowId="main" column="hero_image" value={settings.heroImage} folder="hero">
+        <motion.div
+          className="absolute inset-0"
+          initial={{ scale: 1 }}
+          animate={{ scale: 1.08 }}
+          transition={{ duration: 20, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
+        >
+          <Image
+            src={settings.heroImage || "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1920&h=1080&fit=crop"}
+            alt="Photography hero"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+        </motion.div>
+      </EditableImage>
 
       {/* Dark overlay gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/20" />
@@ -40,21 +45,25 @@ export default function Hero() {
           Photography &bull; Art &bull; Stories
         </motion.p>
 
-        <AnimatedText
-          text={siteSettings.tagline}
-          as="h1"
-          className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-foreground leading-tight max-w-5xl"
-          delay={0.5}
-        />
+        <EditableField table="cp_site_settings" rowId="main" column="tagline" value={settings.tagline}>
+          <AnimatedText
+            text={settings.tagline}
+            as="h1"
+            className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-foreground leading-tight max-w-5xl"
+            delay={0.5}
+          />
+        </EditableField>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="text-foreground/60 text-base md:text-lg mt-6 md:mt-8 max-w-xl"
-        >
-          Capturing moments that last forever
-        </motion.p>
+        <EditableField table="cp_site_settings" rowId="main" column="hero_description" value={settings.heroDescription}>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
+            className="text-foreground/60 text-base md:text-lg mt-6 md:mt-8 max-w-xl"
+          >
+            {settings.heroDescription}
+          </motion.p>
+        </EditableField>
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -62,12 +71,12 @@ export default function Hero() {
           transition={{ delay: 2, duration: 0.8 }}
           className="mt-10 md:mt-12"
         >
-          <a
+          <Link
             href="/works"
             className="inline-block border border-accent text-accent px-8 py-3 text-sm uppercase tracking-[0.2em] hover:bg-accent hover:text-background transition-all duration-300"
           >
             View Works
-          </a>
+          </Link>
         </motion.div>
       </div>
 

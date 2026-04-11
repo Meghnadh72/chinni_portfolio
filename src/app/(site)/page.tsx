@@ -5,16 +5,34 @@ import Services from "@/components/sections/Services";
 import Testimonials from "@/components/sections/Testimonials";
 import UpcomingEvents from "@/components/sections/UpcomingEvents";
 import ContactCTA from "@/components/sections/ContactCTA";
+import {
+  getSiteSettings,
+  getPhotographer,
+  getFeaturedProjects,
+  getServices,
+  getTestimonials,
+  getEvents,
+} from "@/lib/data";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [settings, photographer, projects, services, testimonials, events] =
+    await Promise.all([
+      getSiteSettings(),
+      getPhotographer(),
+      getFeaturedProjects(),
+      getServices(),
+      getTestimonials(),
+      getEvents(),
+    ]);
+
   return (
     <>
-      <Hero />
-      <About />
-      <PortfolioGrid />
-      <Services />
-      <Testimonials />
-      <UpcomingEvents />
+      <Hero settings={settings} />
+      <About photographer={photographer} />
+      <PortfolioGrid projects={projects} />
+      <Services services={services} />
+      <Testimonials testimonials={testimonials} />
+      <UpcomingEvents events={events} />
       <ContactCTA />
     </>
   );

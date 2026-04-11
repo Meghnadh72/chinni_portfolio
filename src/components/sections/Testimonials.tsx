@@ -4,9 +4,9 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import AnimatedText from "@/components/ui/AnimatedText";
 import TestimonialCard from "@/components/ui/TestimonialCard";
-import { testimonials } from "@/lib/demo-data";
+import type { Testimonial } from "@/lib/types";
 
-export default function Testimonials() {
+export default function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
 
@@ -29,11 +29,10 @@ export default function Testimonials() {
           />
         </div>
 
-        {/* Scrollable container on mobile, grid on larger screens */}
         <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0">
           {testimonials.slice(0, 3).map((testimonial, i) => (
             <motion.div
-              key={testimonial.clientName}
+              key={testimonial.id}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.15 * i }}

@@ -5,13 +5,11 @@ import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import AnimatedText from "@/components/ui/AnimatedText";
 import ProjectCard from "@/components/ui/ProjectCard";
-import { projects } from "@/lib/demo-data";
+import type { Project } from "@/lib/types";
 
-export default function PortfolioGrid() {
+export default function PortfolioGrid({ projects }: { projects: Project[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
-
-  const featured = projects.filter((p) => p.featured).slice(0, 6);
 
   return (
     <section className="section-padding bg-muted" ref={ref}>
@@ -33,7 +31,7 @@ export default function PortfolioGrid() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {featured.map((project, i) => (
+          {projects.map((project, i) => (
             <motion.div
               key={project.slug}
               initial={{ opacity: 0, y: 40 }}

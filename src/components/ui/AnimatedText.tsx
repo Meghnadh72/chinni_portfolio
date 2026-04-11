@@ -23,6 +23,7 @@ export default function AnimatedText({
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing with inView state
     if (isInView) setShouldAnimate(true);
   }, [isInView]);
 

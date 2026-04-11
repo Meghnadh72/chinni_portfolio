@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { InstagramIcon, FacebookIcon, YoutubeIcon } from "@/components/ui/SocialIcons";
 import { motion, AnimatePresence } from "framer-motion";
-import { siteSettings } from "@/lib/demo-data";
+import type { SiteSettings } from "@/lib/types";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -16,15 +16,15 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-const socialLinks = [
-  { href: siteSettings.socialLinks.instagram, icon: InstagramIcon, label: "Instagram" },
-  { href: siteSettings.socialLinks.facebook, icon: FacebookIcon, label: "Facebook" },
-  { href: siteSettings.socialLinks.youtube, icon: YoutubeIcon, label: "YouTube" },
-];
-
-export default function Navbar() {
+export default function Navbar({ settings }: { settings: SiteSettings }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const socialLinks = [
+    { href: settings.instagramUrl, icon: InstagramIcon, label: "Instagram" },
+    { href: settings.facebookUrl, icon: FacebookIcon, label: "Facebook" },
+    { href: settings.youtubeUrl, icon: YoutubeIcon, label: "YouTube" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -51,7 +51,7 @@ export default function Navbar() {
             href="/"
             className="text-foreground font-serif text-xl md:text-2xl tracking-wider z-50"
           >
-            {siteSettings.siteName}
+            {settings.siteName}
           </Link>
 
           {/* Desktop Nav */}
@@ -149,7 +149,7 @@ export default function Navbar() {
 
       {/* WhatsApp Floating Button */}
       <a
-        href={siteSettings.socialLinks.whatsapp}
+        href={settings.whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 bg-green-600 hover:bg-green-500 text-white p-3 rounded-full shadow-lg transition-colors duration-300"

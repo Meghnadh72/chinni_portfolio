@@ -4,10 +4,10 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { MapPin, Calendar, ExternalLink } from "lucide-react";
 import AnimatedText from "@/components/ui/AnimatedText";
-import { events } from "@/lib/demo-data";
 import { formatEventDate } from "@/lib/utils";
+import type { Event } from "@/lib/types";
 
-export default function UpcomingEvents() {
+export default function UpcomingEvents({ events }: { events: Event[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
 
@@ -35,7 +35,7 @@ export default function UpcomingEvents() {
             const date = formatEventDate(event.date);
             return (
               <motion.div
-                key={event.title}
+                key={event.id}
                 initial={{ opacity: 0, y: 40 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.15 * i }}

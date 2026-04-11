@@ -5,35 +5,25 @@ import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import ImageReveal from "@/components/ui/ImageReveal";
 import AnimatedText from "@/components/ui/AnimatedText";
-import { photographer as demoPhotographer } from "@/lib/demo-data";
-import { useSanityQuery } from "@/hooks/useSanity";
-import { photographerQuery } from "@/sanity/lib/queries";
-import { urlFor } from "@/sanity/lib/image";
+import EditableField from "@/components/admin/EditableField";
+import EditableImage from "@/components/admin/EditableImage";
+import type { Photographer } from "@/lib/types";
 
-export default function About() {
+export default function About({ photographer }: { photographer: Photographer }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-20% 0px" });
-
-  const { data: rawData } = useSanityQuery(photographerQuery);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data = rawData as Record<string, any> | null;
-
-  const name = data?.name || demoPhotographer.name;
-  const shortBio = data?.shortBio || demoPhotographer.shortBio;
-  const philosophy = data?.philosophy || demoPhotographer.philosophy;
-  const portraitUrl = data?.portrait
-    ? urlFor(data.portrait).width(700).height(900).url()
-    : "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=700&h=900&fit=crop";
 
   return (
     <section className="section-padding bg-background" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <ImageReveal
-            src={portraitUrl}
-            alt={name}
-            className="aspect-[3/4] rounded-sm"
-          />
+          <EditableImage table="cp_photographer" rowId="main" column="portrait" value={photographer.portrait} folder="photographer">
+            <ImageReveal
+              src={photographer.portrait || "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=700&h=900&fit=crop"}
+              alt={photographer.name}
+              className="aspect-[3/4] rounded-sm"
+            />
+          </EditableImage>
 
           <div>
             <motion.p
@@ -45,32 +35,38 @@ export default function About() {
               About the Artist
             </motion.p>
 
-            <AnimatedText
-              text={`Meet ${name}`}
-              as="h2"
-              className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-6"
-              delay={0.3}
-            />
+            <EditableField table="cp_photographer" rowId="main" column="name" value={photographer.name}>
+              <AnimatedText
+                text={`Meet ${photographer.name}`}
+                as="h2"
+                className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-6"
+                delay={0.3}
+              />
+            </EditableField>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-foreground/70 text-base md:text-lg leading-relaxed mb-8"
-            >
-              {shortBio}
-            </motion.p>
+            <EditableField table="cp_photographer" rowId="main" column="short_bio" value={photographer.shortBio} multiline>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="text-foreground/70 text-base md:text-lg leading-relaxed mb-8"
+              >
+                {photographer.shortBio}
+              </motion.p>
+            </EditableField>
 
-            <motion.blockquote
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="border-l-2 border-accent pl-6 mb-8"
-            >
-              <p className="text-foreground/60 italic font-serif text-lg">
-                &ldquo;{philosophy}&rdquo;
-              </p>
-            </motion.blockquote>
+            <EditableField table="cp_photographer" rowId="main" column="philosophy" value={photographer.philosophy} multiline>
+              <motion.blockquote
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                className="border-l-2 border-accent pl-6 mb-8"
+              >
+                <p className="text-foreground/60 italic font-serif text-lg">
+                  &ldquo;{photographer.philosophy}&rdquo;
+                </p>
+              </motion.blockquote>
+            </EditableField>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
