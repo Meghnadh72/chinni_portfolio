@@ -1,16 +1,16 @@
--- Seed data for Lumi Studios Portfolio
+-- Seed data for Lumis Studio Portfolio
 -- Matches demo-data.ts content
 
 -- Site Settings
 INSERT INTO cp_site_settings (id, site_name, tagline, hero_heading, hero_description, hero_image, contact_email, contact_phone, address, instagram_url, facebook_url, youtube_url, whatsapp_url)
 VALUES (
   'main',
-  'Lumi Studios',
+  'Lumis Studio',
   'Crafting unforgettable stories, one frame at a time',
-  'Lumi Studios',
+  'Lumis Studio',
   'Capturing moments that last forever',
   'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1920&h=1080&fit=crop',
-  'hello@lumistudios.com',
+  'hello@lumisstudio.com',
   '+1 (555) 123-4567',
   '123 Creative Studio Lane, New York, NY 10001',
   'https://instagram.com',
@@ -23,7 +23,7 @@ VALUES (
 INSERT INTO cp_photographer (id, name, short_bio, full_bio, philosophy, portrait, achievements)
 VALUES (
   'main',
-  'Lumi Studios',
+  'Lumis Studio',
   'With over a decade behind the lens, I capture the raw emotions and fleeting moments that make life extraordinary. Every frame is a story waiting to be told.',
   E'Photography found me at a time when I was searching for a way to freeze the beauty I saw in everyday moments. What started as a passion quickly became my life''s work — over 10 years of capturing weddings, portraits, events, and the quiet poetry of landscapes.\n\nI believe the best photographs are felt, not just seen. My approach blends documentary authenticity with artistic vision, creating images that transport you back to the exact emotion of that moment.\n\nWhen I''m not behind the camera, you''ll find me exploring new cities, experimenting with film photography, or mentoring aspiring photographers.',
   'Light is my paint, the world is my canvas, and every moment is a masterpiece waiting to be revealed.',
@@ -115,19 +115,19 @@ ON CONFLICT (slug) DO NOTHING;
 -- Testimonials
 INSERT INTO cp_testimonials (id, client_name, client_role, quote, rating, featured) VALUES
   (gen_random_uuid()::text, 'Sarah Johnson', 'Bride',
-   'Lumi Studios captured every magical moment of our wedding day. The photos are so beautiful they make me cry every time I look at them. Truly an artist!', 5, true),
+   'Lumis Studio captured every magical moment of our wedding day. The photos are so beautiful they make me cry every time I look at them. Truly an artist!', 5, true),
 
   (gen_random_uuid()::text, 'Michael Chen', 'Event Director',
-   'We''ve worked with many photographers, but Lumi Studios'' ability to capture the energy and emotion of our events is unmatched. A true professional.', 5, true),
+   'We''ve worked with many photographers, but Lumis Studio''s ability to capture the energy and emotion of our events is unmatched. A true professional.', 5, true),
 
   (gen_random_uuid()::text, 'Amara Okafor', 'Model & Actress',
-   'Every portrait session feels effortless. Lumi Studios has an incredible eye for light and knows exactly how to bring out the best in everyone.', 5, true),
+   'Every portrait session feels effortless. Lumis Studio has an incredible eye for light and knows exactly how to bring out the best in everyone.', 5, true),
 
   (gen_random_uuid()::text, 'David & Emily Park', 'Couple',
-   'From our engagement shoot to the wedding day, Lumi Studios was there for every step. The photos tell our love story perfectly.', 5, true),
+   'From our engagement shoot to the wedding day, Lumis Studio was there for every step. The photos tell our love story perfectly.', 5, true),
 
   (gen_random_uuid()::text, 'Lisa Rodriguez', 'Creative Director, Vogue',
-   'Lumi Studios'' editorial work is stunning. Every image has a cinematic quality that elevates any publication. Absolutely world-class.', 5, true)
+   'Lumis Studio''s editorial work is stunning. Every image has a cinematic quality that elevates any publication. Absolutely world-class.', 5, true)
 ON CONFLICT DO NOTHING;
 
 -- Events

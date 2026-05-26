@@ -2,9 +2,9 @@
 // Replace with Sanity queries once your CMS is set up.
 
 export const siteSettings = {
-  siteName: "Lumi Studios",
+  siteName: "Lumis Studio",
   tagline: "Crafting unforgettable stories, one frame at a time",
-  contactEmail: "hello@lumistudios.com",
+  contactEmail: "hello@lumisstudio.com",
   contactPhone: "+1 (555) 123-4567",
   address: "123 Creative Studio Lane, New York, NY 10001",
   socialLinks: {
@@ -16,7 +16,7 @@ export const siteSettings = {
 };
 
 export const photographer = {
-  name: "Lumi Studios",
+  name: "Lumis Studio",
   shortBio:
     "With over a decade behind the lens, I capture the raw emotions and fleeting moments that make life extraordinary. Every frame is a story waiting to be told.",
   fullBio:
@@ -197,35 +197,35 @@ export const testimonials = [
     clientName: "Sarah Johnson",
     clientRole: "Bride",
     quote:
-      "Lumi Studios captured every magical moment of our wedding day. The photos are so beautiful they make me cry every time I look at them. Truly an artist!",
+      "Lumis Studio captured every magical moment of our wedding day. The photos are so beautiful they make me cry every time I look at them. Truly an artist!",
     rating: 5,
   },
   {
     clientName: "Michael Chen",
     clientRole: "Event Director",
     quote:
-      "We've worked with many photographers, but Lumi Studios' ability to capture the energy and emotion of our events is unmatched. A true professional.",
+      "We've worked with many photographers, but Lumis Studio's ability to capture the energy and emotion of our events is unmatched. A true professional.",
     rating: 5,
   },
   {
     clientName: "Amara Okafor",
     clientRole: "Model & Actress",
     quote:
-      "Every portrait session feels effortless. Lumi Studios has an incredible eye for light and knows exactly how to bring out the best in everyone.",
+      "Every portrait session feels effortless. Lumis Studio has an incredible eye for light and knows exactly how to bring out the best in everyone.",
     rating: 5,
   },
   {
     clientName: "David & Emily Park",
     clientRole: "Couple",
     quote:
-      "From our engagement shoot to the wedding day, Lumi Studios was there for every step. The photos tell our love story perfectly.",
+      "From our engagement shoot to the wedding day, Lumis Studio was there for every step. The photos tell our love story perfectly.",
     rating: 5,
   },
   {
     clientName: "Lisa Rodriguez",
     clientRole: "Creative Director, Vogue",
     quote:
-      "Lumi Studios' editorial work is stunning. Every image has a cinematic quality that elevates any publication. Absolutely world-class.",
+      "Lumis Studio's editorial work is stunning. Every image has a cinematic quality that elevates any publication. Absolutely world-class.",
     rating: 5,
   },
 ];

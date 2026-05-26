@@ -1,4 +1,4 @@
-# Lumi Studios Portfolio
+# Lumis Studio Portfolio
 
 ## Overview
 Modern, futuristic photography portfolio built with Next.js 16 (App Router), Tailwind CSS v4, Framer Motion, and Supabase CMS. Dark cinema aesthetic with gold accents, film grain texture, and scroll-triggered animations. Mobile-first responsive design. Edit-in-place admin UI for content management.
