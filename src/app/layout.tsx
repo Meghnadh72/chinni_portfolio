@@ -16,8 +16,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Chinni Photography | Capturing Moments That Last Forever",
-    template: "%s | Chinni Photography",
+    default: "Lumis Studio | Capturing Moments That Last Forever",
+    template: "%s | Lumis Studio",
   },
   description:
     "Professional photography portfolio — weddings, portraits, events, and editorial. Crafting unforgettable stories, one frame at a time.",
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Chinni Photography",
-    title: "Chinni Photography | Capturing Moments That Last Forever",
+    siteName: "Lumis Studio",
+    title: "Lumis Studio | Capturing Moments That Last Forever",
     description:
       "Professional photography portfolio — weddings, portraits, events, and editorial.",
   },
