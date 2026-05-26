@@ -1,4 +1,4 @@
--- Chinni Photography Portfolio — Supabase schema
+-- Lumi Studios Portfolio — Supabase schema
 -- All tables prefixed with cp_ to coexist in shared Supabase project
 
 -- ============================================================
